@@ -24,7 +24,7 @@ module.exports = function(app) {
           })
           .seq(function(data) { res.json(data); })
           .catch(function(err) {
-            res.send(500, err);
+            res.send(err.code || 500, err);
           });
     });
   });
