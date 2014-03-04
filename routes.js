@@ -7,12 +7,16 @@ module.exports = function(app) {
     .par(require('./lib/google-docs'))
     .seq(function(embedly, googleDocs) {
       app.get('/1/oembed', function(req, res) {
-        Seq([req.query])
+        var params = req.query;
+        _.defaults(params, {
+          width: 500
+        });
+
+        Seq([params])
           .par(googleDocs)
           .par(require('./lib/document-preview'))
           .par(embedly)
           .seq(function(gDocs, preview, embedlyData) {
-            console.log('test', _.toArray(arguments));
             this(null, gDocs
               ? gDocs
               : _.extend(embedlyData || {}, preview || {}));
