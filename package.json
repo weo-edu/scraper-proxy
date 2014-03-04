@@ -1,0 +1,20 @@
+{
+  "name": "scraper-proxy",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "embedly": "~1.0.2",
+    "lodash": "~2.4.1",
+    "cors": "~2.1.1",
+    "seq": "~0.3.5",
+    "knox": "~0.8.9",
+    "uuid": "~1.4.1",
+    "googleapis": "~0.6.1"
+  }
+}
