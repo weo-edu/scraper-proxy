@@ -9,7 +9,8 @@ module.exports = function(app) {
       app.get('/1/oembed', function(req, res) {
         var params = req.query;
         _.defaults(params, {
-          width: 500
+          width: 500,
+          maxwidth: 500
         });
 
         Seq([params])
