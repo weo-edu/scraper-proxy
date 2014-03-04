@@ -12,8 +12,10 @@ module.exports = function(app) {
           .par(require('./lib/document-preview'))
           .par(embedly)
           .seq(function(gDocs, preview, embedlyData) {
-            if(gDocs) this(null, gDocs);
-            else _.extend(embedlyData, preview);
+            console.log('test', _.toArray(arguments));
+            this(null, gDocs
+              ? gDocs
+              : _.extend(embedlyData || {}, preview || {}));
           })
           .seq(function(data) { res.json(data); })
           .catch(function(err) {
