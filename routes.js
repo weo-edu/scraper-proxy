@@ -1,5 +1,6 @@
 var Seq = require('seq')
-  , _ = require('lodash');
+  , _ = require('lodash')
+  , s3 = require('./lib/s3');
 
 module.exports = function(app, embedly, googleDocs, docPreview) {
   app.get('/1/oembed', function(req, res) {
@@ -17,6 +18,16 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
         this(null, gDocs
           ? gDocs
           : _.extend(embedlyData || {}, preview || {}));
+      })
+      .seq(function(data) {
+        if(! data.thumbnail_url)
+          return this(null, data);
+
+        var self = this;
+        s3.task(data.thumbnail_url, function(err, res) {
+          data.thumbnail_url = res && res.req.url;
+          self(err, data);
+        });
       })
       .seq(function(data) { res.json(data); })
       .catch(function(err) {
