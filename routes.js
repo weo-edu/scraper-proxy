@@ -31,7 +31,7 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
       })
       .seq(function(data) { res.json(data); })
       .catch(function(err) {
-        res.send(err.code || 500, err);
+        res.send(err.code || err.error_code || 500, err);
       });
   });
 };
