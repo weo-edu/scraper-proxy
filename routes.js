@@ -3,6 +3,11 @@ var Seq = require('seq')
   , s3 = require('./lib/s3');
 
 module.exports = function(app, embedly, googleDocs, docPreview) {
+  // Make codeship happy
+  app.get('/', function(req, res) {
+    res.send('up');
+  });
+
   app.get('/1/oembed', function(req, res) {
     var params = req.query;
     _.defaults(params, {
