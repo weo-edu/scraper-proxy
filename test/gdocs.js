@@ -28,7 +28,7 @@ describe('google docs', function() {
       expect(err).to.be.null;
       expect(data.thumbnail_url).to.not.be.falsy;
       expect(data.title).to.equal('vidsheet exponents.pdf');
-      expect(data.html).to.equal('<iframe src=\"https://docs.google.com/viewer?url=https%3A%2F%2Fdocs.google.com%2Fuc%3Fid%3D1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM%26export%3Ddownload&a=bi&pagenumber=1&w=500\"></iframe>');
+      expect(data.html).to.equal('<iframe src=\"https://docs.google.com/uc?id=1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM&export=download\"></iframe>');
       done();
     });
   });
