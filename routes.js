@@ -19,9 +19,10 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
     try {
       url = atob(url);
     } catch(e) {
-
+      console.log('e', e);
     }
 
+    console.log('here', url);
     req.params.url = url;
     Seq([params])
       .par(googleDocs)
