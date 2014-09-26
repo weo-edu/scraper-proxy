@@ -1,7 +1,7 @@
 var Seq = require('seq')
   , _ = require('lodash')
   , s3 = require('./lib/s3');
-var base64 = require('base64');
+var base64 = require('js-base64');
 module.exports = function(app, embedly, googleDocs, docPreview) {
   // Make codeship happy
   app.get('/', function(req, res) {
