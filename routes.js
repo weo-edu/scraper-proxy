@@ -1,7 +1,7 @@
 var Seq = require('seq')
   , _ = require('lodash')
   , s3 = require('./lib/s3');
-
+var base64 = require('base64');
 module.exports = function(app, embedly, googleDocs, docPreview) {
   // Make codeship happy
   app.get('/', function(req, res) {
@@ -16,11 +16,8 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
     });
 
     var url = params.url;
-    try {
-      url = atob(url);
-    } catch(e) {
-      console.log('e', e);
-    }
+    if(url[url.length-1] === '=')
+      url = base64.decode(url);
 
     console.log('here', url);
     params.url = url;
