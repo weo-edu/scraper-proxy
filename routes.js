@@ -15,7 +15,7 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
       maxwidth: 500
     });
 
-    var url = req.params.url;
+    var url = params.url;
     try {
       url = atob(url);
     } catch(e) {
@@ -23,7 +23,7 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
     }
 
     console.log('here', url);
-    req.params.url = url;
+    params.url = url;
     Seq([params])
       .par(googleDocs)
       .par(docPreview)
