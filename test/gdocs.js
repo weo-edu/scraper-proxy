@@ -1,7 +1,6 @@
 var expect = require('chai').expect;
 var gdocs = require('../lib/google-docs');
 
-
 function scrape(url, cb) {
   gdocs.call(function(err, fn) {
     if(err) return cb(err);
