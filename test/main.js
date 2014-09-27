@@ -29,7 +29,14 @@ describe('main', function() {
       expect(data.thumbnail_url).to.not.be.falsy;
       expect(data.title).to.equal('Testing Public Document WEO');
       expect(data.html).to.equal('<iframe src="https://docs.google.com/document/d/1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk/preview"></iframe>');
-      done();
+
+      // This url base64 encodes with an _ in it
+      scrape(base64.encode('https://www.youtube.com/watch?v=3sKdDyyanGk', true), function(err, res) {
+        var data = res.body;
+        expect(err).to.be.falsy;
+        expect(data.url).to.equal('http://www.youtube.com/watch?v=3sKdDyyanGk');
+        done();
+      });
     });
   });
 

@@ -9,7 +9,7 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
     res.send('up');
   });
 
-  var re = /^[a-zA-Z0-9\=]+$/;
+  var re = /^[a-zA-Z0-9\=\_]+$/;
   function isBase64(str) {
     return re.test(str);
   }
