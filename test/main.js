@@ -32,4 +32,12 @@ describe('main', function() {
       done();
     });
   });
-})
+
+  it('should handle youtube urls specially', function(done) {
+    scrape('https://www.youtube.com/watch?v=bXSQ-OXExCA&list=UUZff37s8JCOCojOY1IM-G2Q', function(err, res) {
+      var data = res.body;
+      expect(data.html).to.equal('<iframe width="500" height="" src="//www.youtube.com/embed/bXSQ-OXExCA" frameborder="0" allowfullscreen></iframe>');
+      done();
+    });
+  });
+});
