@@ -9,7 +9,7 @@ module.exports = function(app, embedly, googleDocs, docPreview, preprocess) {
     res.send('up');
   });
 
-  var re = /^[a-zA-Z0-9\=\_]+$/;
+  var re = /^[a-zA-Z0-9\=\_\-]+$/;
   function isBase64(str) {
     return re.test(str);
   }
@@ -23,8 +23,9 @@ module.exports = function(app, embedly, googleDocs, docPreview, preprocess) {
 
     // Allow base64 encoded urls to be passed in order to defeat some
     // filtering schemes
-    if(isBase64(params.url))
+    if(isBase64(params.url)) {
       params.url = base64.decode(params.url);
+    }
 
     Seq([params])
       .seq(preprocess)
