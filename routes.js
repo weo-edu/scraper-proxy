@@ -3,7 +3,7 @@ var _ = require('lodash');
 var s3 = require('./lib/s3');
 var base64 = require('js-base64').Base64;
 
-module.exports = function(app, embedly, googleDocs, docPreview) {
+module.exports = function(app, embedly, googleDocs, docPreview, preprocess) {
   // Make codeship happy
   app.get('/', function(req, res) {
     res.send('up');
@@ -27,6 +27,7 @@ module.exports = function(app, embedly, googleDocs, docPreview) {
       params.url = base64.decode(params.url);
 
     Seq([params])
+      .seq(preprocess)
       .par(googleDocs)
       .par(docPreview)
       .par(embedly)

@@ -21,5 +21,6 @@ Seq()
   .par(require('./lib/google-docs'))
   .seq(function(embedly, googleDocs) {
     var docPreview = require('./lib/document-preview');
-    require('./routes')(app, embedly, googleDocs, docPreview);
+    var preprocess = require('./lib/preprocess');
+    require('./routes')(app, embedly, googleDocs, docPreview, preprocess);
   });

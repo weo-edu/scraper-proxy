@@ -12,6 +12,7 @@ function scrape(url, cb) {
 
 describe('main', function() {
   var docUrl = 'https://docs.google.com/document/d/1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk/edit?usp=sharing';
+  this.timeout(5000);
 
   it('document scrape', function(done) {
     scrape(docUrl, function(err, res) {
@@ -46,5 +47,14 @@ describe('main', function() {
       expect(data.html).to.equal('<iframe width="500" height="" src="//www.youtube.com/embed/bXSQ-OXExCA?autoplay=0" frameborder="0" allowfullscreen></iframe>');
       done();
     });
+  });
+
+  it('should decode google images urls', function(done) {
+    scrape('http://www.google.com/imgres?imgurl=http%3A%2F%2Fi.ytimg.com%2Fvi%2FYviYufXRw0g%2Fmaxresdefault.jpg&imgrefurl=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DYviYufXRw0g&h=718&w=1280&tbnid=oQ6OkIAIzadjMM%3A&zoom=1&docid=MsLvkkBObh3yAM&ei=_59RVNz0MNizoQTTsILwBg&tbm=isch&ved=0CC4QMygBMAE&iact=rc&uact=3&dur=300&page=1&start=0&ndsp=24'
+      , function(err, res) {
+        expect(err).to.be.falsy;
+        expect(res.body.url).to.equal('http://i.ytimg.com/vi/YviYufXRw0g/maxresdefault.jpg');
+        done();
+      });
   });
 });
