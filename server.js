@@ -1,5 +1,6 @@
 var express = require('express');
 var app = module.exports = express();
+var config = require('./lib/config');
 
 /*
   Logging
@@ -23,9 +24,8 @@ app.use(require('cors')());
 /*
   Listen
  */
-var port = process.env.PORT || 5000;
-app.listen(port, function() {
-  console.log('listening', port);
+app.listen(config.port, function() {
+  console.log('listening', config.port);
 });
 
 /*
