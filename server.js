@@ -1,9 +1,15 @@
 var express = require('express');
 var app = module.exports = express();
-var Seq = require('seq');
 
-require('./lib/logging')('scraper');
+/*
+  Logging
+ */
+require('weo-logger')('scraper');
+app.use(require('morgan')('tiny'));
 
+/*
+  Config
+ */
 app.configure('development', function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 });
@@ -13,13 +19,16 @@ app.configure('production', function() {
 });
 
 app.use(require('cors')());
-app.listen(process.env.PORT || 5000);
 
-Seq()
-  .par(require('./lib/embedly'))
-  .par(require('./lib/google-docs'))
-  .seq(function(embedly, googleDocs) {
-    var docPreview = require('./lib/document-preview');
-    var preprocess = require('./lib/preprocess');
-    require('./routes')(app, embedly, googleDocs, docPreview, preprocess);
-  });
+/*
+  Listen
+ */
+var port = process.env.PORT || 5000;
+app.listen(port, function() {
+  console.log('listening', port);
+});
+
+/*
+  Boot
+ */
+app.use(require('./lib/boot'));
