@@ -1,6 +1,5 @@
-var _ = require('lodash');
-var cors = require('cors');
-var app = module.exports = require('express')();
+var express = require('express');
+var app = module.exports = express();
 var Seq = require('seq');
 
 require('./lib/logging')('scraper');
@@ -13,9 +12,8 @@ app.configure('production', function() {
   app.use(express.errorHandler());
 });
 
-app.use(cors());
+app.use(require('cors')());
 app.listen(process.env.PORT || 5000);
-
 
 Seq()
   .par(require('./lib/embedly'))
