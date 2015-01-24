@@ -1,8 +1,9 @@
-var express = require('express')
-  , _ = require('lodash')
-  , cors = require('cors')
-  , app = module.exports = express()
-  Seq = require('seq');
+var _ = require('lodash');
+var cors = require('cors');
+var app = module.exports = require('express')();
+var Seq = require('seq');
+
+require('./lib/logging')('scraper');
 
 app.configure('development', function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
