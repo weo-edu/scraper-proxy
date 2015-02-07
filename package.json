@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "~2.1.1",
-    "embedly": "~1.0.2",
+    "embedly": "1.0.2",
     "express": "~3.4.8",
     "googleapis": "~0.6.1",
     "js-base64": "^2.1.5",
