@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,5 +29,9 @@
     "mocha": "^1.21.4",
     "no-iits": "0.0.0",
     "supertest": "^0.13.0"
+  },
+  "engines": {
+    "npm": "2.0.2",
+    "node": "0.10.33"
   }
 }
