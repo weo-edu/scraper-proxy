@@ -31,8 +31,12 @@ app.listen(config.port, function() {
 /*
   Boot
  */
-app.use(require('./lib/boot'));
+app.use(require('./lib/main'));
 
 app.use(function(err, req, res, next) {
-  console.log('err', err, err.stack);
+  if(err) {
+    if(err.code !== 400) console.log('err', err, err.stack);
+    res.send(err.code || err.error_code || 500, err);
+  } else
+    next();
 });

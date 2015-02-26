@@ -22,6 +22,7 @@
     "seq": "~0.3.5",
     "superagent": "~0.16.0",
     "uuid": "~1.4.1",
+    "validator": "^3.32.0",
     "weo-logger": "git://github.com/weo-edu/weo-logger"
   },
   "devDependencies": {

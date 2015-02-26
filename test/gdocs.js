@@ -1,11 +1,11 @@
 var expect = require('chai').expect;
-var gdocs = require('../lib/google-docs');
+var app = require('../');
+var request = require('supertest')(app);
 
 function scrape(url, cb) {
-  gdocs.call(function(err, fn) {
-    if(err) return cb(err);
-    fn.call(cb, {url: url});
-  });
+  request
+    .get('/1/oembed?url=' + encodeURIComponent(url))
+    .end(cb);
 }
 
 describe('google docs', function() {
@@ -15,7 +15,8 @@ describe('google docs', function() {
   var docUrl = 'https://docs.google.com/document/d/1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk/edit?usp=sharing';
 
   it('should work with normal docs', function(done) {
-    scrape(docUrl, function(err, data) {
+    scrape(docUrl, function(err, res) {
+      var data = res.body;
       expect(err).to.be.null;
       expect(data.thumbnail_url).to.not.be.falsy;
       expect(data.title).to.equal('Testing Public Document WEO');
@@ -25,7 +26,8 @@ describe('google docs', function() {
   });
 
   it('should work with pdfs', function(done) {
-    scrape(pdfUrl, function(err, data) {
+    scrape(pdfUrl, function(err, res) {
+      var data = res.body;
       expect(err).to.be.null;
       expect(data.thumbnail_url).to.not.be.falsy;
       expect(data.title).to.equal('vidsheet exponents.pdf');
