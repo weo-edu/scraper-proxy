@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cacher": "^2.1.1",
     "cors": "~2.1.1",
     "embedly": "1.0.2",
     "express": "~3.4.8",
