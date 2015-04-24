@@ -10,7 +10,7 @@ deployment:
       - docker push tutum.co/ashaffer/scraper-proxy
       - curl -d {} $PRODUCTION_REDEPLOY_URL
   staging:
-    branch: staging
+    branch: master
     commands:
       - docker build -t weo-edu/scraper-proxy:staging .
       - docker push tutum.co/ashaffer/scraper-proxy
