@@ -1,0 +1,17 @@
+machine:
+  post:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS $DOCKER_REGISTRY
+
+deployment:
+  production:
+    branch: production
+    commands:
+      - docker build -t weo-edu/scraper-proxy:production .
+      - docker push tutum.co/ashaffer/scraper-proxy
+      - curl -d {} $PRODUCTION_REDEPLOY_URL
+  staging:
+    branch: staging
+    commands:
+      - docker build -t weo-edu/scraper-proxy:staging .
+      - docker push tutum.co/ashaffer/scraper-proxy
+      - curl -d {} $STAGING_REDEPLOY_URL
