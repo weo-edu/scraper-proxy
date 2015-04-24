@@ -2,7 +2,7 @@ machine:
   services:
     - docker
   post:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS $DOCKER_REGISTRY
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS -e $DOCKER_EMAIL $DOCKER_REGISTRY
 
 deployment:
   production:
