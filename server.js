@@ -1,42 +1,59 @@
-var express = require('express')
-var app = module.exports = express()
-var config = require('./lib/config')
+/**
+ * Modules
+ */
+import express from 'express'
+import weoLogger from 'weo-logger'
+import morgan from 'morgan'
+import cors from 'cors'
+import config from './lib/config'
+import main from './lib/main'
+import handleError from './lib/handleError'
+
+/**
+ * Vars
+ */
+const app = express()
+
+/**
+ * Exports
+ */
+export default app
 
 /*
   Logging
  */
-require('weo-logger')('scraper')
-app.use(require('morgan')('tiny'))
+weoLogger('scraper')
+app.use(morgan('tiny'))
 
 /*
   Config
  */
-app.configure('development', function () {
-  app.use(express.errorHandler({dumpExceptions: true, showStack: true}))
+app.configure('development', () => {
+  app.use(express.errorHandler({
+    dumpExceptions: true,
+    showStack: true
+  }))
 })
 
-app.configure('production', function () {
+app.configure('production', () => {
   app.use(express.errorHandler())
 })
 
-app.use(require('cors')())
+app.use(cors())
 
 /*
   Listen
  */
-app.listen(config.port, function () {
+app.listen(config.port, () => {
   console.log('listening', config.port)
 })
 
 /*
   Boot
  */
-app.use(require('./lib/main'))
+app.use(main)
 
-app.use(function (err, req, res, next) {
-  if (err) {
-    if (err.code !== 400) console.log('err', err, err.stack)
-    res.send(err.code || err.error_code || 500, err)
-  } else
-    next()
-})
+/**
+ * Global error handler
+ */
+app.use(handleError)
