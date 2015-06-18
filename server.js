@@ -1,59 +1,45 @@
 /**
  * Modules
  */
-import express from 'express'
+import koa from 'koa'
+import koaLogger from 'koa-logger'
+import cors from 'kcors'
+import mount from 'koa-mount'
 import weoLogger from 'weo-logger'
-import morgan from 'morgan'
-import cors from 'cors'
-import config from './lib/config'
+import {port} from './lib/config'
 import main from './lib/main'
 import handleError from './lib/handleError'
 
 /**
  * Vars
  */
-const app = express()
+const app = koa()
 
 /**
  * Exports
  */
 export default app
 
+
 /*
   Logging
  */
 weoLogger('scraper')
-app.use(morgan('tiny'))
+app.use(koaLogger())
+
+/**
+ * CORS
+ */
+app.use(cors())
 
 /*
-  Config
+  Main app
  */
-app.configure('development', () => {
-  app.use(express.errorHandler({
-    dumpExceptions: true,
-    showStack: true
-  }))
-})
-
-app.configure('production', () => {
-  app.use(express.errorHandler())
-})
-
-app.use(cors())
+app.use(mount(main))
 
 /*
   Listen
  */
-app.listen(config.port, () => {
-  console.log('listening', config.port)
+app.listen(port, () => {
+  console.log('listening', port)
 })
-
-/*
-  Boot
- */
-app.use(main)
-
-/**
- * Global error handler
- */
-app.use(handleError)
