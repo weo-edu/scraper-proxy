@@ -30,6 +30,7 @@
     "qs": "^2.3.2",
     "superagent": "^1.2.0",
     "thunkify": "^2.1.2",
+    "url-join": "0.0.1",
     "uuid": "~1.4.1",
     "validator": "^3.32.0",
     "weo-logger": "git://github.com/weo-edu/weo-logger"
