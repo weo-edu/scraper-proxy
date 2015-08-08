@@ -62,12 +62,22 @@ describe('scraper', function() {
     const {body} = yield scrape(pdfUrl)
     assert.ok(body.thumbnail_url)
     assert.equal(body.title, 'vidsheet exponents.pdf')
-    assert.equal(body.html, '<iframe src="https://drive.google.com/file/d/1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM/edit?usp=drivesdk"></iframe>')
+    assert.equal(body.html, '<iframe src="https://drive.google.com/file/d/1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM/view?usp=drivesdk"></iframe>')
   })
 
   it('should work on % encoded urls', function *() {
     const {body} = yield scrape('http://www.usd497.org/cms/lib8/KS01906981/Centricity/Domain/5043/Finn%20Jake%20Algebraic.jpg')
     assert.ok(body.image)
     assert.equal(body.type, 'photo')
+  })
+
+  it('should identify non-html links as files', function *() {
+    const {body} = yield scrape('http://weo-uploads-dev.s3.amazonaws.com/uploads/55c532f00d2a29cddc677250E.md')
+    assert.equal(body.type, 'file')
+  })
+
+  it('should identify html links as links', function *() {
+    const {body} = yield scrape('https://www.google.com')
+    assert.equal(body.type, 'link')
   })
 })
