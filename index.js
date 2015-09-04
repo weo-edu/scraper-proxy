@@ -1,6 +1,7 @@
 /**
- * Modules
+ * Imports
  */
+
 import koa from 'koa'
 import koaLogger from 'koa-logger'
 import cors from 'kcors'
@@ -13,32 +14,38 @@ import handleError from './lib/handleError'
 /**
  * Vars
  */
+
 const app = koa()
-
-/**
- * Exports
- */
-export default app
-
 
 /*
   Logging
  */
+
 weoLogger('scraper')
 app.use(koaLogger())
 
 /**
  * CORS
  */
+
 app.use(cors())
 
 /*
   Main app
  */
+
 app.use(mount(main))
+
 /*
   Listen
  */
+
 app.listen(port, () => {
   console.log('listening', port)
 })
+
+/**
+ * Exports
+ */
+
+export default app

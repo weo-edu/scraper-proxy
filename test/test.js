@@ -32,7 +32,7 @@ describe('scraper', function() {
 
   it('should handle youtube urls specially', function *() {
     const {body} = yield scrape('https://www.youtube.com/watch?v=bXSQ-OXExCA&list=UUZff37s8JCOCojOY1IM-G2Q')
-    assert.equal(body.html, '<iframe width="500" height="" src="//www.youtube.com/embed/bXSQ-OXExCA?autoplay=0" frameborder="0" allowfullscreen></iframe>')
+    assert.equal(body.html, '<iframe width="500" height="" src="//www.youtube.com/embed/bXSQ-OXExCA?autoplay=0&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>')
   })
 
   it('should decode google images urls', function *() {
