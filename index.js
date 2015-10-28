@@ -3,7 +3,6 @@
  */
 
 import koa from 'koa'
-import koaLogger from 'koa-logger'
 import cors from 'kcors'
 import mount from 'koa-mount'
 import weoLogger from 'weo-logger'
@@ -22,7 +21,6 @@ const app = koa()
  */
 
 weoLogger('scraper')
-app.use(koaLogger())
 
 /**
  * CORS
