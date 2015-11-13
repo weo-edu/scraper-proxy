@@ -39,14 +39,15 @@ describe('scraper', function() {
   })
 
   it('should not consider single-letter urls valid', function *() {
+    let res
+
     try {
-      yield scrape('ab')
+      res = yield scrape('ab')
     } catch(e) {
-      assert.equal(e.status, 400)
-      return
+      res = e
     }
 
-    throw new Error('Test failed')
+    assert.equal(res.status, 400)
   })
 
   it('should work with normal docs', function *() {
