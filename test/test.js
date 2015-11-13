@@ -25,14 +25,12 @@ describe('scraper', function() {
 
   it('document scrape', function *() {
     const {body} = yield scrape(docUrl)
-    assert.ok(body.thumbnail_url)
-    assert.equal(body.title, 'Testing Public Document WEO')
-    assert.equal(body.html, '<iframe src="https://docs.google.com/document/d/1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk/preview"></iframe>')
+    assert.equal(body.html, '<iframe src="https://docs.google.com/viewer?srcid=1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>')
   })
 
   it('should handle youtube urls specially', function *() {
     const {body} = yield scrape('https://www.youtube.com/watch?v=bXSQ-OXExCA&list=UUZff37s8JCOCojOY1IM-G2Q')
-    assert.equal(body.html, '<iframe width="500" height="" src="//www.youtube.com/embed/bXSQ-OXExCA?autoplay=0" frameborder="0" allowfullscreen></iframe>')
+    assert.equal(body.html, '<iframe width="500" height="" src="//www.youtube.com/embed/bXSQ-OXExCA?autoplay=0&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>')
   })
 
   it('should decode google images urls', function *() {
@@ -41,27 +39,40 @@ describe('scraper', function() {
   })
 
   it('should not consider single-letter urls valid', function *() {
+    let res
+
     try {
-      yield scrape('ab')
+      res = yield scrape('ab')
     } catch(e) {
-      assert.equal(e.status, 400)
-      return
+      res = e
     }
 
-    throw new Error('Test failed')
+    assert.equal(res.status, 400)
   })
 
   it('should work with normal docs', function *() {
     const {body} = yield scrape(docUrl)
-    assert.ok(body.thumbnail_url)
-    assert.equal(body.title, 'Testing Public Document WEO')
-    assert.equal(body.html, '<iframe src="https://docs.google.com/document/d/1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk/preview"></iframe>')
+    assert.equal(body.html, '<iframe src="https://docs.google.com/viewer?srcid=1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>')
   })
 
   it('should work with pdfs', function *() {
     const {body} = yield scrape(pdfUrl)
-    assert.ok(body.thumbnail_url)
-    assert.equal(body.title, 'vidsheet exponents.pdf')
-    assert.equal(body.html, '<iframe src="https://drive.google.com/file/d/1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM/edit?usp=drivesdk"></iframe>')
+    assert.equal(body.html, '<iframe src="https://docs.google.com/viewer?srcid=1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>')
+  })
+
+  it('should work on % encoded urls', function *() {
+    const {body} = yield scrape('http://www.usd497.org/cms/lib8/KS01906981/Centricity/Domain/5043/Finn%20Jake%20Algebraic.jpg')
+    assert.ok(body.image)
+    assert.equal(body.type, 'image')
+  })
+
+  it('should identify non-html links as files', function *() {
+    const {body} = yield scrape('http://weo-uploads-dev.s3.amazonaws.com/uploads/55c532f00d2a29cddc677250E.md')
+    assert.equal(body.type, 'file')
+  })
+
+  it('should identify html links as links', function *() {
+    const {body} = yield scrape('https://www.google.com')
+    assert.equal(body.type, 'link')
   })
 })
