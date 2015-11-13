@@ -25,9 +25,7 @@ describe('scraper', function() {
 
   it('document scrape', function *() {
     const {body} = yield scrape(docUrl)
-    assert.ok(body.thumbnail_url)
-    assert.equal(body.title, 'Testing Public Document WEO')
-    assert.equal(body.html, '<iframe src="https://docs.google.com/document/d/1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk/preview"></iframe>')
+    assert.equal(body.html, '<iframe src="https://docs.google.com/viewer?srcid=1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>')
   })
 
   it('should handle youtube urls specially', function *() {
@@ -53,22 +51,18 @@ describe('scraper', function() {
 
   it('should work with normal docs', function *() {
     const {body} = yield scrape(docUrl)
-    assert.ok(body.thumbnail_url)
-    assert.equal(body.title, 'Testing Public Document WEO')
-    assert.equal(body.html, '<iframe src="https://docs.google.com/document/d/1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk/preview"></iframe>')
+    assert.equal(body.html, '<iframe src="https://docs.google.com/viewer?srcid=1DUH6nU7FnIVB3SSq8YIQ4xAdjUeGP9o5tAcU97mRUJk&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>')
   })
 
   it('should work with pdfs', function *() {
     const {body} = yield scrape(pdfUrl)
-    assert.ok(body.thumbnail_url)
-    assert.equal(body.title, 'vidsheet exponents.pdf')
-    assert.equal(body.html, '<iframe src="https://drive.google.com/file/d/1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM/view?usp=drivesdk"></iframe>')
+    assert.equal(body.html, '<iframe src="https://docs.google.com/viewer?srcid=1rNGkMLyovbD5vfx8QYMCweJJzm9BQPEo6-op4P20sA2K9P-_oH1_XD9N58MM&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>')
   })
 
   it('should work on % encoded urls', function *() {
     const {body} = yield scrape('http://www.usd497.org/cms/lib8/KS01906981/Centricity/Domain/5043/Finn%20Jake%20Algebraic.jpg')
     assert.ok(body.image)
-    assert.equal(body.type, 'photo')
+    assert.equal(body.type, 'image')
   })
 
   it('should identify non-html links as files', function *() {
