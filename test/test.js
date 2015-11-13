@@ -62,7 +62,7 @@ describe('scraper', function() {
   it('should work on % encoded urls', function *() {
     const {body} = yield scrape('http://www.usd497.org/cms/lib8/KS01906981/Centricity/Domain/5043/Finn%20Jake%20Algebraic.jpg')
     assert.ok(body.image)
-    assert.equal(body.type, 'photo')
+    assert.equal(body.type, 'image')
   })
 
   it('should identify non-html links as files', function *() {
