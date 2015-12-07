@@ -28,7 +28,7 @@
     "lodash": "~2.4.1",
     "lru-cache": "^2.6.4",
     "qs": "^2.3.2",
-    "sharp": "git://github.com/lovell/sharp.git#look",
+    "sharp": "^0.12.0",
     "superagent": "^1.2.0",
     "superagent-as-promised": "^3.1.1",
     "thunkify": "^2.1.2",
