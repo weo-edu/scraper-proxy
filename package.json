@@ -15,6 +15,7 @@
     "download": "git://github.com/weo-edu/download.git",
     "embedly": "^1.0.4",
     "get-youtube-id": "^1.0.0",
+    "gm": "^1.21.1",
     "googleapis": "~0.6.1",
     "is-youtube-video": "^0.1.1",
     "kcors": "^1.0.1",
