@@ -1,0 +1,35 @@
+#
+# Load Balancer
+#
+scraper_lb:
+  image: 'tutum/haproxy:latest'
+  environment:
+    - BACKEND_PORT=3000
+  ports:
+    - '80:80'
+  links:
+    - scraper
+  roles:
+    - global
+
+#
+# Link scraper
+#
+scraper:
+  image: 'tutum.co/ashaffer/scraper-proxy:master'
+  target_num_containers: 2
+  autoredeploy: true
+  environment:
+    - PORT=3000
+    - 'DEBUG=scraper:*'
+    - 'DOCTHUMB_URL=http://docthumb.weo.io/'
+    - EMBEDLY_API_KEY=578f2e0b9cb04763888f0a6c9b907b55
+    - GOOGLE_DRIVE_API_KEY=AIzaSyDCntpE09OxvK4vTsCTMlUKI-wlMi3H3SI
+    - PAPERTRAIL_HOST=logs2.papertrailapp.com
+    - PAPERTRAIL_PORT=15920
+    - S3_API_KEY=AKIAJGRZMUAG422PORVQ
+    - S3_BUCKET=dev.eos.io
+    - S3_REGION=us-west-1
+    - S3_SECRET=VmldgplYd6qfga0HpE1KqsMiGBJDiA88OtyYTfbc
+  expose:
+    - '3000'
