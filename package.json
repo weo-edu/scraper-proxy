@@ -32,7 +32,7 @@
     "lru-cache": "^2.6.4",
     "ogp": "0.0.2",
     "qs": "^2.3.2",
-    "sharp": "^0.12.1",
+    "sharp": "^0.16.0",
     "superagent": "^1.2.0",
     "superagent-as-promised": "^3.1.1",
     "thunkify": "^2.1.2",
